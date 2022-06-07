@@ -27,7 +27,7 @@ namespace NetCoreWepAPI.Controllers
                     {
                         wine.Id = reader.GetInt32("id");
                         wine.Name = reader.GetString("name");
-                        wine.Clasification = reader.GetString("clasification");
+                        wine.Clasification = reader.GetInt32("clasification");
                         wine.Year = reader.GetInt32("year");
                         wine.Aroma = reader.GetString("aroma");
                         wine.Swetness = reader.GetFloat("swetness");
@@ -68,7 +68,7 @@ namespace NetCoreWepAPI.Controllers
                         Wine wine = new Wine();
                         wine.Id = reader.GetInt32("id");
                         wine.Name = reader.GetString("name");
-                        wine.Clasification = reader.GetString("clasification");
+                        wine.Clasification = reader.GetInt32("clasification");
                         wine.Year = reader.GetInt32("year");
                         wine.Aroma = reader.GetString("aroma");
                         wine.Swetness = reader.GetFloat("swetness");
@@ -94,15 +94,42 @@ namespace NetCoreWepAPI.Controllers
         {
             try
             {
-                using (MySqlConnection con = new(WineControllerHelpers.conString))
+                using (MySqlConnection connection = new(WineControllerHelpers.conString))
                 {
-                    con.Open();
+                    connection.Open();
                     string query = @$"INSERT INTO `Wine` (`name`, `clasification`, `year`, `aroma`, `swetness`, `acidity`, `alcohol`, `notes`) 
-                        VALUES ('{wine.Name}', '{wine.Clasification}', '{wine.Year}', '{wine.Aroma}', '{wine.Swetness}', '{wine.Acidity}', '{wine.Alcohol}', '{wine.Notes}')";
-                    MySqlCommand cmd = new MySqlCommand(query, con);
-                    MySqlDataReader reader = cmd.ExecuteReader();
+                        VALUES ('{wine.Name}', '{wine.Clasification}', '{wine.Year}', '{wine.Aroma}', 
+                        '{wine.Swetness}', '{wine.Acidity}', '{wine.Alcohol}', '{wine.Notes}')";
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    MySqlDataReader reader = command.ExecuteReader();
                     reader.Close();
-                    con.Close();
+                    connection.Close();
+                }
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("updateWine")]
+        public ActionResult<Wine> UpdateWine(Wine wine)
+        {
+            try
+            {
+                using (MySqlConnection connection = new(WineControllerHelpers.conString))
+                {
+                    connection.Open();
+                    string query = @$"UPDATE INTO `Wine` (`name`, `clasification`, `year`, `aroma`, `swetness`, `acidity`, `alcohol`, `notes`) 
+                        VALUES ('{wine.Name}', '{wine.Clasification}', '{wine.Year}', '{wine.Aroma}', 
+                        '{wine.Swetness}', '{wine.Acidity}', '{wine.Alcohol}', '{wine.Notes}');
+                        WHERE id = {wine.Id}";
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    MySqlDataReader reader = command.ExecuteReader();
+                    reader.Close();
+                    connection.Close();
                 }
                 return Ok();
             }
