@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace NetCoreWepAPI.Controllers
 {
@@ -10,6 +12,7 @@ namespace NetCoreWepAPI.Controllers
     [ApiController]
     public class BeerController : ControllerBase
     {
+        public static string conString = "Server=remotemysql.com;Database=OxAIZvu7Va;Uid=OxAIZvu7Va;Pwd=CUeqNsd0vO;";
         List<Beer> Beers = new List<Beer>()
         {
             new Beer() { Id= 1, Name = "Corona" }
@@ -19,7 +22,6 @@ namespace NetCoreWepAPI.Controllers
         public ActionResult<Beer> Get(int Id)
         {
             //connect to sql
-            string conString = "Server=remotemysql.com;Database=OxAIZvu7Va;Uid=OxAIZvu7Va;Pwd=CUeqNsd0vO;";
 
             List<Beer> beers = new List<Beer>();
             using (MySqlConnection con = new MySqlConnection(conString))
@@ -46,6 +48,51 @@ namespace NetCoreWepAPI.Controllers
             else
             {
                 return beer;
+            }
+        }
+
+
+        [HttpPost]
+        [Route("addBeer")]
+        public async Task<ActionResult<Beer>> AddBeer(Beer beer)
+        {
+            try
+            {
+                using (MySqlConnection con = new MySqlConnection(conString))
+                {
+                    con.Open();
+                    MySqlCommand cmd = new MySqlCommand("INSERT INTO `Beer` (`Id`, `Name`) VALUES ('" + beer.Id + "', '" + beer.Name + "')", con);
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    reader.Close();
+                    con.Close();
+                }
+                return Ok(beer);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("updateBeer")]
+        public async Task<ActionResult<Beer>> UpdateBeer(Beer beer)
+        {
+            try
+            {
+                using (MySqlConnection con = new MySqlConnection(conString))
+                {
+                    con.Open();
+                    MySqlCommand cmd = new MySqlCommand("UPDATE `Beer` SET `Name` = '" + beer.Name + "' WHERE `Beer`.`Id` = " + beer.Id + "", con);
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    reader.Close();
+                    con.Close();
+                }
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
     }
