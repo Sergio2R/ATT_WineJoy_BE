@@ -16,7 +16,7 @@ namespace NetCoreWepAPI.Controllers
         {
             try
             {
-                using (MySqlConnection connection = new(WineControllerHelpers.conString))
+                using (MySqlConnection connection = new(WineControllerHelpers.connectionString))
                 {
                     connection.Open();
                     string query = $"SELECT * FROM Wine WHERE ID = {Id}";
@@ -56,7 +56,7 @@ namespace NetCoreWepAPI.Controllers
         {
             try
             {
-                using (MySqlConnection connection = new(WineControllerHelpers.conString))
+                using (MySqlConnection connection = new(WineControllerHelpers.connectionString))
                 {
                     connection.Open();
                     string query = "SELECT * FROM Wine";
@@ -94,12 +94,11 @@ namespace NetCoreWepAPI.Controllers
         {
             try
             {
-                using (MySqlConnection connection = new(WineControllerHelpers.conString))
+                using (MySqlConnection connection = new(WineControllerHelpers.connectionString))
                 {
                     connection.Open();
                     string query = @$"INSERT INTO `Wine` (`name`, `clasification`, `year`, `aroma`, `swetness`, `acidity`, `alcohol`, `notes`) 
-                        VALUES ('{wine.Name}', '{wine.Clasification}', '{wine.Year}', '{wine.Aroma}', 
-                        '{wine.Swetness}', '{wine.Acidity}', '{wine.Alcohol}', '{wine.Notes}')";
+                        VALUES ('{wine.Name}', '{wine.Clasification}', '{wine.Year}', '{wine.Aroma}', '{wine.Swetness}', '{wine.Acidity}', '{wine.Alcohol}', '{wine.Notes}')";
                     MySqlCommand command = new MySqlCommand(query, connection);
                     MySqlDataReader reader = command.ExecuteReader();
                     reader.Close();
@@ -113,19 +112,39 @@ namespace NetCoreWepAPI.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("updateWine")]
         public ActionResult<Wine> UpdateWine(Wine wine)
         {
             try
             {
-                using (MySqlConnection connection = new(WineControllerHelpers.conString))
+                using (MySqlConnection connection = new(WineControllerHelpers.connectionString))
                 {
                     connection.Open();
-                    string query = @$"UPDATE INTO `Wine` (`name`, `clasification`, `year`, `aroma`, `swetness`, `acidity`, `alcohol`, `notes`) 
-                        VALUES ('{wine.Name}', '{wine.Clasification}', '{wine.Year}', '{wine.Aroma}', 
-                        '{wine.Swetness}', '{wine.Acidity}', '{wine.Alcohol}', '{wine.Notes}');
-                        WHERE id = {wine.Id}";
+                    string query = @$"UPDATE `Wine` SET `name`= '{wine.Name}',`clasification`='{wine.Clasification}',`year`='{wine.Year}',`aroma`='{wine.Aroma}',`swetness`='{wine.Swetness}',`acidity`='{wine.Acidity}',`alcohol`='{wine.Alcohol}',`notes`='{wine.Notes}' WHERE id = '{wine.Id}'";
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    MySqlDataReader reader = command.ExecuteReader();
+                    reader.Close();
+                    connection.Close();
+                }
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        [Route("deleteWine")]
+        public ActionResult<Wine> DeleteWine(int id)
+        {
+            try
+            {
+                using (MySqlConnection connection = new(WineControllerHelpers.connectionString))
+                {
+                    connection.Open();
+                    string query = $"DELETE FROM `Wine` WHERE id = {id}";
                     MySqlCommand command = new MySqlCommand(query, connection);
                     MySqlDataReader reader = command.ExecuteReader();
                     reader.Close();
