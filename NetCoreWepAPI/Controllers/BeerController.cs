@@ -34,6 +34,8 @@ namespace NetCoreWepAPI.Controllers
                     beer1.Name = reader.GetString("name");
                     //extract data
                 }
+                reader.Close();
+                con.Close();
             }
 
             var beer = Beers.Where(x => x.Id == Id).FirstOrDefault();
