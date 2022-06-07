@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using MySqlConnector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,8 @@ namespace NetCoreWepAPI
     {
         //*
         readonly string CorsConfiguration = "_corsConfiguration";
+
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
