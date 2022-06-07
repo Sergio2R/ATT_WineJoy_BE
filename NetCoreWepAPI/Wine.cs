@@ -6,6 +6,7 @@ namespace NetCoreWepAPI
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Clasification { get; set; }
         public int Year { get; set; }
         public string Aroma { get; set; }
         public float Swetness { get; set; }
