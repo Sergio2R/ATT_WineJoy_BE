@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
 
 namespace NetCoreWepAPI.Controllers
 {
@@ -9,38 +10,101 @@ namespace NetCoreWepAPI.Controllers
     [ApiController]
     public class WineController : ControllerBase
     {
-        public static string conString = "Server=remotemysql.com;Database=OxAIZvu7Va;Uid=OxAIZvu7Va;Pwd=CUeqNsd0vO;";
-
         [HttpGet]
         [Route("getWine")]
         public ActionResult<Wine> GetWine(int Id)
         {
             try
             {
-                using (MySqlConnection con = new MySqlConnection(conString))
+                using (MySqlConnection connection = new(WineControllerHelpers.conString))
                 {
-                    con.Open();
-                    MySqlCommand cmd = new MySqlCommand("select * from Wine", con);
-                    MySqlDataReader reader = cmd.ExecuteReader();
+                    connection.Open();
+                    string query = $"SELECT * FROM Wine WHERE ID = {Id}";
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    MySqlDataReader reader = command.ExecuteReader();
                     Wine wine = new Wine();
                     while (reader.Read())
                     {
                         wine.Id = reader.GetInt32("id");
                         wine.Name = reader.GetString("name");
                         wine.Clasification = reader.GetString("clasification");
-                        //extract data
+                        wine.Year = reader.GetInt32("year");
+                        wine.Aroma = reader.GetString("aroma");
+                        wine.Swetness = reader.GetFloat("swetness");
+                        wine.Acidity = reader.GetFloat("acidity");
+                        wine.Alcohol = reader.GetFloat("alcohol");
+                        wine.Notes = reader.GetString("notes");
                     }
                     reader.Close();
-                    con.Close();
+                    connection.Close();
                     if (wine == null)
                     {
                         return NotFound();
                     }
-                    else
-                    {
-                        return wine;
-                    }
+                    return wine;
                 }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("getWineList")]
+        public ActionResult<List<Wine>> GetWineList()
+        {
+            try
+            {
+                using (MySqlConnection connection = new(WineControllerHelpers.conString))
+                {
+                    connection.Open();
+                    string query = "SELECT * FROM Wine";
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    MySqlDataReader reader = command.ExecuteReader();
+                    List<Wine> wineList = new List<Wine>();
+                    while (reader.Read())
+                    {
+                        Wine wine = new Wine();
+                        wine.Id = reader.GetInt32("id");
+                        wine.Name = reader.GetString("name");
+                        wine.Clasification = reader.GetString("clasification");
+                        wine.Year = reader.GetInt32("year");
+                        wine.Aroma = reader.GetString("aroma");
+                        wine.Swetness = reader.GetFloat("swetness");
+                        wine.Acidity = reader.GetFloat("acidity");
+                        wine.Alcohol = reader.GetFloat("alcohol");
+                        wine.Notes = reader.GetString("notes");
+                        wineList.Add(wine);
+                    }
+                    reader.Close();
+                    connection.Close();
+                    return wineList;
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("addWine")]
+        public ActionResult<Wine> AddWine(Wine wine)
+        {
+            try
+            {
+                using (MySqlConnection con = new(WineControllerHelpers.conString))
+                {
+                    con.Open();
+                    string query = @$"INSERT INTO `Wine` (`name`, `clasification`, `year`, `aroma`, `swetness`, `acidity`, `alcohol`, `notes`) 
+                        VALUES ('{wine.Name}', '{wine.Clasification}', '{wine.Year}', '{wine.Aroma}', '{wine.Swetness}', '{wine.Acidity}', '{wine.Alcohol}', '{wine.Notes}')";
+                    MySqlCommand cmd = new MySqlCommand(query, con);
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    reader.Close();
+                    con.Close();
+                }
+                return Ok();
             }
             catch (Exception ex)
             {
