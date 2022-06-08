@@ -45,8 +45,8 @@ namespace NetCoreWepAPI.Controllers
         }
 
         [HttpGet]
-        [Route("getClasifications")]
-        public ActionResult<List<Clasification>> GetClasifications()
+        [Route("getClasificationList")]
+        public ActionResult<List<Clasification>> GetClasificationList()
         {
             try
             {
