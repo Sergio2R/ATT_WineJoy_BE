@@ -9,33 +9,33 @@ namespace NetCoreWepAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AromaController : ControllerBase
+    public class SweetnessController : ControllerBase
     {
         [HttpGet]
-        [Route("getAroma")]
-        public ActionResult<Aroma> GetAroma(int Id)
+        [Route("getSweetness")]
+        public ActionResult<Sweetness> GetSweetness(int Id)
         {
             try
             {
                 using (MySqlConnection connection = new(GeneralControllerHelpers.connectionString))
                 {
                     connection.Open();
-                    string query = $"SELECT * FROM Aroma WHERE ID = {Id}";
+                    string query = $"SELECT * FROM Swetness WHERE ID = {Id}";
                     MySqlCommand command = new MySqlCommand(query, connection);
                     MySqlDataReader reader = command.ExecuteReader();
-                    Aroma aroma = new Aroma();
+                    Sweetness sweetness = new Sweetness();
                     while (reader.Read())
                     {
-                        aroma.Id = reader.GetInt32("id");
-                        aroma.Description = reader.GetString("description");
+                        sweetness.Id = reader.GetInt32("id");
+                        sweetness.Description = reader.GetString("description");
                     }
                     reader.Close();
                     connection.Close();
-                    if (aroma == null)
+                    if (sweetness == null)
                     {
                         return NotFound();
                     }
-                    return aroma;
+                    return sweetness;
                 }
             }
             catch (Exception ex)
@@ -45,28 +45,28 @@ namespace NetCoreWepAPI.Controllers
         }
 
         [HttpGet]
-        [Route("getAromaList")]
-        public ActionResult<List<Aroma>> GetAromaList()
+        [Route("getSweetnessList")]
+        public ActionResult<List<Sweetness>> GetSweetnessList()
         {
             try
             {
                 using (MySqlConnection connection = new(GeneralControllerHelpers.connectionString))
                 {
                     connection.Open();
-                    string query = "SELECT * FROM Aroma";
+                    string query = "SELECT * FROM Swetness";
                     MySqlCommand command = new(query, connection);
                     MySqlDataReader reader = command.ExecuteReader();
-                    List<Aroma> aromaList = new List<Aroma>();
+                    List<Sweetness> sweetnessList = new List<Sweetness>();
                     while (reader.Read())
                     {
-                        Aroma aroma = new Aroma();
-                        aroma.Id = reader.GetInt32("id");
-                        aroma.Description = reader.GetString("description");
-                        aromaList.Add(aroma);
+                        Sweetness sweetness = new Sweetness();
+                        sweetness.Id = reader.GetInt32("id");
+                        sweetness.Description = reader.GetString("description");
+                        sweetnessList.Add(sweetness);
                     }
                     reader.Close();
                     connection.Close();
-                    return aromaList;
+                    return sweetnessList;
                 }
             }
             catch (Exception ex)
