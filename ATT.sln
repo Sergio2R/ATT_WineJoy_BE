@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreWepAPI", "NetCoreWepAPI\NetCoreWepAPI.csproj", "{62DC11C3-015D-4957-881A-977064E2DD8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCoreWepAPI", "NetCoreWepAPI\NetCoreWepAPI.csproj", "{62DC11C3-015D-4957-881A-977064E2DD8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WineJoyFeatures.Test", "WineJoyFeatures.Test\WineJoyFeatures.Test.csproj", "{6BE109FE-1471-4264-9E02-BD74CEDC667E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{62DC11C3-015D-4957-881A-977064E2DD8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62DC11C3-015D-4957-881A-977064E2DD8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62DC11C3-015D-4957-881A-977064E2DD8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BE109FE-1471-4264-9E02-BD74CEDC667E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BE109FE-1471-4264-9E02-BD74CEDC667E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BE109FE-1471-4264-9E02-BD74CEDC667E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BE109FE-1471-4264-9E02-BD74CEDC667E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
