@@ -29,6 +29,7 @@ Controlers/GeneralControllerHelpers connectionString
 
 De ser necesario cambiar los puertos en los cuales se expone el API de ser requerido y en el Startup ConfigureServices los permisos de CORS
 
-![alt text]([http://url/to/img.png](https://ibb.co/YDKQVwC))
+https://i.ibb.co/TKn2Ndf/AT1.png
+
 
 
