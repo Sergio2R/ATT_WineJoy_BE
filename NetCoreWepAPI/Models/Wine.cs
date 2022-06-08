@@ -1,6 +1,6 @@
 using System;
 
-namespace NetCoreWepAPI
+namespace NetCoreWepAPI.Models
 {
     public class Wine
     {

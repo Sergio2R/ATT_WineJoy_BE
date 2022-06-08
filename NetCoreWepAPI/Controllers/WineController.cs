@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
+using NetCoreWepAPI.Models;
 using System;
 using System.Collections.Generic;
 
@@ -16,7 +17,7 @@ namespace NetCoreWepAPI.Controllers
         {
             try
             {
-                using (MySqlConnection connection = new(WineControllerHelpers.connectionString))
+                using (MySqlConnection connection = new(GeneralControllerHelpers.connectionString))
                 {
                     connection.Open();
                     string query = $"SELECT * FROM Wine WHERE ID = {Id}";
@@ -56,7 +57,7 @@ namespace NetCoreWepAPI.Controllers
         {
             try
             {
-                using (MySqlConnection connection = new(WineControllerHelpers.connectionString))
+                using (MySqlConnection connection = new(GeneralControllerHelpers.connectionString))
                 {
                     connection.Open();
                     string query = "SELECT * FROM Wine";
@@ -94,11 +95,10 @@ namespace NetCoreWepAPI.Controllers
         {
             try
             {
-                using (MySqlConnection connection = new(WineControllerHelpers.connectionString))
+                using (MySqlConnection connection = new(GeneralControllerHelpers.connectionString))
                 {
                     connection.Open();
-                    string query = @$"INSERT INTO `Wine` (`name`, `clasification`, `year`, `aroma`, `swetness`, `acidity`, `alcohol`, `notes`) 
-                        VALUES ('{wine.Name}', '{wine.Clasification}', '{wine.Year}', '{wine.Aroma}', '{wine.Swetness}', '{wine.Acidity}', '{wine.Alcohol}', '{wine.Notes}')";
+                    string query = $"INSERT INTO `Wine` (`name`, `clasification`, `year`, `aroma`, `swetness`, `acidity`, `alcohol`, `notes`) VALUES ('{wine.Name}', '{wine.Clasification}', '{wine.Year}', '{wine.Aroma}', '{wine.Swetness}', '{wine.Acidity}', '{wine.Alcohol}', '{wine.Notes}')";
                     MySqlCommand command = new(query, connection);
                     MySqlDataReader reader = command.ExecuteReader();
                     reader.Close();
@@ -118,7 +118,7 @@ namespace NetCoreWepAPI.Controllers
         {
             try
             {
-                using (MySqlConnection connection = new(WineControllerHelpers.connectionString))
+                using (MySqlConnection connection = new(GeneralControllerHelpers.connectionString))
                 {
                     connection.Open();
                     string query = @$"UPDATE `Wine` SET `name`= '{wine.Name}',`clasification`='{wine.Clasification}',`year`='{wine.Year}',`aroma`='{wine.Aroma}',`swetness`='{wine.Swetness}',`acidity`='{wine.Acidity}',`alcohol`='{wine.Alcohol}',`notes`='{wine.Notes}' WHERE id = '{wine.Id}'";
@@ -141,7 +141,7 @@ namespace NetCoreWepAPI.Controllers
         {
             try
             {
-                using (MySqlConnection connection = new(WineControllerHelpers.connectionString))
+                using (MySqlConnection connection = new(GeneralControllerHelpers.connectionString))
                 {
                     connection.Open();
                     string query = $"DELETE FROM `Wine` WHERE id = {id}";
