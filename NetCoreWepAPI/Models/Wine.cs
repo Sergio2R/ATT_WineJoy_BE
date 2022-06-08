@@ -9,9 +9,9 @@ namespace NetCoreWepAPI.Models
         public int Clasification { get; set; }
         public int Year { get; set; }
         public string Aroma { get; set; }
-        public float Swetness { get; set; }
-        public float Acidity { get; set; }
-        public float Alcohol { get; set; }
+        public int Swetness { get; set; }
+        public int Acidity { get; set; }
+        public int Alcohol { get; set; }
         public string Notes { get; set; }
 
     }
