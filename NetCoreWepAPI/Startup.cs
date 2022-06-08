@@ -43,7 +43,12 @@ namespace NetCoreWepAPI
                 options.AddPolicy(name: CorsConfiguration,
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:4200");//dominios perimitidos
+                        //dominios perimitidos
+                        //builder.WithOrigins("http://localhost:4200");
+                        //builder.WithOrigins("*");
+                        builder.AllowAnyOrigin();
+                        builder.AllowAnyHeader();
+                        builder.AllowAnyMethod();
                     });
             });
         }
