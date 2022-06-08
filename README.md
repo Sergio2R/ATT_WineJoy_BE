@@ -9,20 +9,29 @@ Se implementa Swagger utilizando los correspondientes metodos HTTP para ofertar 
 ## Entidades
 
 Wine: Entidad principal. implementa ints, floats, varchars contiene las FK a las demas
+
 Otras entidades. Clasification, Sweetness, Acidity. Para la descirpcion de caracteristicas
 
 ## BD
 
 La BD esta implementada en MySQL y una versión publicada,se encuentra ubicacda en la plataforma remoteremotemysql
+
 https://remotemysql.com/phpmyadmin/index.php
+
 Username: OxAIZvu7Va
+
 Database name: OxAIZvu7Va
+
 Password: CUeqNsd0vO
+
 Server: remotemysql.com
+
 Port: 3306
+
 solo esta disponible hasta (08/07/2022)
 
 El conection string se puede modificar en 
+
 Controlers/GeneralControllerHelpers connectionString
 
 ## Importante
