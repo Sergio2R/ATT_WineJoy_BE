@@ -31,9 +31,9 @@ namespace NetCoreWepAPI.Controllers
                         wine.Clasification = reader.GetInt32("clasification");
                         wine.Year = reader.GetInt32("year");
                         wine.Aroma = reader.GetString("aroma");
-                        wine.Swetness = reader.GetFloat("swetness");
-                        wine.Acidity = reader.GetFloat("acidity");
-                        wine.Alcohol = reader.GetFloat("alcohol");
+                        wine.Swetness = reader.GetInt32("swetness");
+                        wine.Acidity = reader.GetInt32("acidity");
+                        wine.Alcohol = reader.GetInt32("alcohol");
                         wine.Notes = reader.GetString("notes");
                     }
                     reader.Close();
@@ -72,9 +72,9 @@ namespace NetCoreWepAPI.Controllers
                         wine.Clasification = reader.GetInt32("clasification");
                         wine.Year = reader.GetInt32("year");
                         wine.Aroma = reader.GetString("aroma");
-                        wine.Swetness = reader.GetFloat("swetness");
-                        wine.Acidity = reader.GetFloat("acidity");
-                        wine.Alcohol = reader.GetFloat("alcohol");
+                        wine.Swetness = reader.GetInt32("swetness");
+                        wine.Acidity = reader.GetInt32("acidity");
+                        wine.Alcohol = reader.GetInt32("alcohol");
                         wine.Notes = reader.GetString("notes");
                         wineList.Add(wine);
                     }
